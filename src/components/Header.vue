@@ -217,7 +217,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{ store.user.name.toUpperCase() }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -225,7 +225,7 @@
                 <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  {{ store.user.name.toUpperCase() }}
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -250,7 +250,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat" @click="logout">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -265,4 +265,25 @@
   </header>
 </template>
 <script setup>
+
+import router from "../route/index.js";
+import api from "../api/index.js";
+import {useAuthUser} from "../stores/auth.js";
+
+const store = useAuthUser()
+const logout = async () =>{
+  await api.post('auth/logout', {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer `+store.token,
+    }
+  })
+      .then(res => {
+        localStorage.clear()
+        store.isLogin = false
+        store.user = []
+        store.token = ""
+        router.replace({path:'/login'})
+      })
+}
 </script>

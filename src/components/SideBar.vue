@@ -8,7 +8,7 @@
           <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>{{ user.name.toUpperCase() }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -25,8 +25,8 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="header">NAVIGATION ADMIN</li>
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -34,45 +34,25 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active">
-              <router-link to="/"><i class="fa fa-circle-o"></i> Dashboard v1</router-link>
+            <li>
+              <router-link to="/"> <span><i class="fa fa-circle-o"></i> Dashboard v1</span></router-link>
             </li>
             <li>
-              <router-link to="/about"><i class="fa fa-circle-o"></i> Dashboard v2</router-link>
+              <router-link to="/about"><span><i class="fa fa-circle-o"></i> Users </span></router-link>
             </li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
+            <i class="fa fa-dashboard"></i> <span>Login</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
+            <li>
+              <router-link to="/login"> <span><i class="fa fa-circle-o"></i> Login Page </span></router-link>
             </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
           </ul>
         </li>
       </ul>
@@ -81,13 +61,16 @@
   </aside>
 </template>
 <script setup>
+import {computed} from "vue";
+
+import {useAuthUser} from "../stores/auth.js";
+const store = useAuthUser()
+const user = computed(() => store.user)
 </script>
 
 <style>
-a:hover,
-a:active,
-a.router-link-active {
-  color: #f8f8f8;
-  background-color: #3c01e5;
+
+a.router-link-exact-active > span {
+  color: white;
 }
 </style>
